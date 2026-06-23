@@ -12,15 +12,23 @@ const displayController = (() => {
   const currentWind = document.querySelector("#current-wind");
   const forecastGrid = document.querySelector("#forecast-grid");
   const weatherGif = document.querySelector("#weather-gif");
+  const errorBox = document.querySelector("#error-box");
+  const errorText = document.querySelector("#error-text");
 
-  const showLoading = () => {
-    dashboard.classList.add("hidden");
+  const showSpinner = () => {
     spinner.classList.remove("hidden");
   };
 
-  const hideLoading = () => {
+  const hideSpinner = () => {
     spinner.classList.add("hidden");
+  };
+
+  const showDashboard = () => {
     dashboard.classList.remove("hidden");
+  };
+
+  const hideDashboard = () => {
+    dashboard.classList.add("hidden");
   };
 
   const updateTheme = (iconString) => {
@@ -72,7 +80,25 @@ const displayController = (() => {
       .join("");
   };
 
-  return { showLoading, hideLoading, renderCurrent, renderForecast };
+  const showError = (message) => {
+    errorText.textContent = message;
+    errorBox.classList.remove("hidden");
+  };
+
+  const clearError = () => {
+    errorBox.classList.add("hidden");
+  };
+
+  return {
+    showSpinner,
+    hideSpinner,
+    showDashboard,
+    hideDashboard,
+    renderCurrent,
+    renderForecast,
+    showError,
+    clearError,
+  };
 })();
 
 export { displayController };
