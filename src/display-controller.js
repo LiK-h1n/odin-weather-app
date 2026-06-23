@@ -89,6 +89,18 @@ const displayController = (() => {
     errorBox.classList.add("hidden");
   };
 
+  const loadWeatherIcon = async (iconName) => {
+    try {
+      const iconModule = await import(`./assets/icons/${iconName}.png`);
+
+      return iconModule.default;
+    } catch (err) {
+      console.error("Icon not found", err);
+
+      return null;
+    }
+  };
+
   return {
     showSpinner,
     hideSpinner,
@@ -98,6 +110,7 @@ const displayController = (() => {
     renderForecast,
     showError,
     clearError,
+    loadWeatherIcon,
   };
 })();
 
