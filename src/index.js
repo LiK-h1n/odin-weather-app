@@ -6,14 +6,23 @@ const searchForm = document.querySelector("#search-form");
 
 searchForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  displayController.showLoading();
+  displayController.clearError();
+  displayController.hideDashboard();
+  displayController.showSpinner();
 
   const location = document.querySelector("#location-input").value;
   const responseJSON = await weatherService.fetchWeather(location);
-  const dayData = weatherService.processCurrentWeather(responseJSON);
-  const weekData = weatherService.processWeeklyForecast(responseJSON);
 
-  displayController.renderCurrent(dayData, true);
-  displayController.renderForecast(weekData);
-  displayController.hideLoading();
+  if (responseJSON === null) {
+    displayController.showError("City not found!");
+  } else {
+    const dayData = weatherService.processCurrentWeather(responseJSON);
+    const weekData = weatherService.processWeeklyForecast(responseJSON);
+
+    displayController.renderCurrent(dayData, true);
+    displayController.renderForecast(weekData);
+    displayController.showDashboard();
+  }
+
+  displayController.hideSpinner();
 });
