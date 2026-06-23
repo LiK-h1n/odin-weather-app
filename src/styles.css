@@ -104,7 +104,7 @@ body {
 
 .app-wrapper {
   width: 100%;
-  max-width: 800px;
+  max-width: 1050px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -172,17 +172,44 @@ button {
 }
 
 .dashboard {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
 }
 
-.current-weather {
+.weekly-forecast {
+  grid-column: 1 / -1;
+}
+
+.current-weather,
+.gif-section {
   background: var(--card-bg);
   border-radius: 12px;
   padding: 2rem;
-  text-align: center;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gif-section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.gif-section {
+  justify-content: center;
+  align-items: center;
+}
+
+.mood-gif {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .current-main {
@@ -245,9 +272,9 @@ button {
 }
 
 .forecast-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   gap: 1rem;
-  overflow-x: auto;
   padding-bottom: 10px;
 }
 
@@ -255,13 +282,15 @@ button {
   background: var(--card-bg);
   padding: 1rem;
   border-radius: 12px;
-  min-width: 120px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  min-width: 0;
 }
 
 .forecast-card img {
