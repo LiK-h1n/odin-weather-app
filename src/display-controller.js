@@ -49,7 +49,7 @@ const displayController = (() => {
     document.body.className = theme;
   };
 
-  const renderCurrent = (data, isMetric) => {
+  const renderCurrent = async (data, isMetric) => {
     const symbol = isMetric ? "C" : "F";
     const windSpeedStr = isMetric ? "kph" : "mph";
 
@@ -62,22 +62,31 @@ const displayController = (() => {
     currentPrecip.textContent = `${data.precipitation}%`;
     currentWind.textContent = `${data.wind} ${windSpeedStr}`;
 
+    const iconUrl = await loadWeatherIcon(data.icon);
+
+    currentIcon.src = iconUrl;
+    currentIcon.alt = data.conditions;
+
     updateTheme(data.icon);
   };
 
-  const renderForecast = (weeklyData) => {
-    forecastGrid.innerHTML = weeklyData
-      .map(
-        (dayData) => `
-      <div class="forecast-card">
-        <strong>${dayData.day}</strong>
-        <small>${dayData.conditions}</small>
-        <span>${Math.round(dayData.high)}° / ${Math.round(dayData.low)}°</span>
-        <small>${dayData.precipitation}% Rain</small>
-      </div>
-    `
-      )
-      .join("");
+  const renderForecast = async (weeklyData) => {
+    const forecastHTML = await Promise.all(
+      weeklyData.map(async (dayData) => {
+        const iconUrl = await loadWeatherIcon(dayData.icon);
+        return `
+          <div class="forecast-card">
+            <strong>${dayData.day}</strong>
+            <img src="${iconUrl}" alt="${dayData.conditions}">
+            <small>${dayData.conditions}</small>
+            <span>${Math.round(dayData.high)}° / ${Math.round(dayData.low)}°</span>
+            <small>${dayData.precipitation}% Rain</small>
+          </div>
+        `;
+      })
+    );
+
+    forecastGrid.innerHTML = forecastHTML.join("");
   };
 
   const showError = (message) => {
