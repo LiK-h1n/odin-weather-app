@@ -54,7 +54,7 @@ const displayController = (() => {
     const windSpeedStr = isMetric ? "kph" : "mph";
 
     locName.textContent = data.location;
-    currentTemp.textContent = `${Math.round(data.temperature)}°`;
+    currentTemp.textContent = `${Math.round(data.temperature)}°${symbol}`;
     currentConditions.textContent = data.conditions;
     currentHiLo.textContent = `${Math.round(data.high)}° / ${Math.round(data.low)}°`;
     currentFeelsLike.textContent = `${Math.round(data.feelsLike)}°`;
