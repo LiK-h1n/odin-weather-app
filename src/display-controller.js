@@ -11,7 +11,7 @@ const displayController = (() => {
   const currentPrecip = document.querySelector("#current-precip");
   const currentWind = document.querySelector("#current-wind");
   const forecastGrid = document.querySelector("#forecast-grid");
-  const weatherGif = document.querySelector("#weather-gif");
+  const weatherGIF = document.querySelector("#weather-gif");
   const errorBox = document.querySelector("#error-box");
   const errorText = document.querySelector("#error-text");
 
@@ -110,6 +110,11 @@ const displayController = (() => {
     }
   };
 
+  const renderGIF = (imageData) => {
+    weatherGIF.src = imageData.url;
+    weatherGIF.alt = imageData.title;
+  };
+
   return {
     showSpinner,
     hideSpinner,
@@ -120,6 +125,7 @@ const displayController = (() => {
     showError,
     clearError,
     loadWeatherIcon,
+    renderGIF,
   };
 })();
 

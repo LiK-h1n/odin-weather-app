@@ -22,9 +22,11 @@ const giphyService = (function createGiphyService() {
   };
 
   const processGIF = (responseJSON) => {
-    const url = responseJSON.data[0].images.original.url;
+    const imageJSON = responseJSON.data[0].images;
+    const url = imageJSON.original.url;
+    const title = imageJSON.title;
 
-    return { url };
+    return { url, title };
   };
 
   return { fetchGIF, processGIF };

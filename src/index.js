@@ -14,22 +14,25 @@ async function updateWeather(location) {
   displayController.hideDashboard();
   displayController.showSpinner();
 
-  let responseJSON;
+  let weatherJSON;
 
   if (isMetric) {
-    responseJSON = await weatherService.fetchWeather(location);
+    weatherJSON = await weatherService.fetchWeather(location);
   } else {
-    responseJSON = await weatherService.fetchWeather(location, "us");
+    weatherJSON = await weatherService.fetchWeather(location, "us");
   }
 
-  if (responseJSON === null) {
+  if (weatherJSON === null) {
     displayController.showError("City not found!");
   } else {
-    const dayData = weatherService.processCurrentWeather(responseJSON);
-    const weekData = weatherService.processWeeklyForecast(responseJSON);
+    const dayData = weatherService.processCurrentWeather(weatherJSON);
+    const weekData = weatherService.processWeeklyForecast(weatherJSON);
+    const imageJSON = await giphyService.fetchGIF(`${dayData.icon} weather`);
+    const imageData = giphyService.processGIF(imageJSON);
 
     displayController.renderCurrent(dayData, isMetric);
     displayController.renderForecast(weekData);
+    displayController.renderGIF(imageData);
     displayController.showDashboard();
 
     lastSearchedLocation = location;
@@ -63,7 +66,3 @@ unitToggleButton.addEventListener("click", () => {
 });
 
 init();
-
-const json = await giphyService.fetchGIF("Sunny");
-const url = giphyService.processGIF(json);
-console.log(url);
