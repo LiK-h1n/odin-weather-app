@@ -37,6 +37,10 @@ async function updateWeather(location) {
   displayController.hideSpinner();
 }
 
+function init() {
+  updateWeather("Pathanamthitta");
+}
+
 searchForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -56,3 +60,5 @@ unitToggleButton.addEventListener("click", () => {
     updateWeather(lastSearchedLocation);
   }
 });
+
+init();
