@@ -42,7 +42,7 @@ async function updateWeather(location) {
 }
 
 function init() {
-  updateWeather("Pathanamthitta");
+  updateWeather("Alsalmaniya");
 }
 
 searchForm.addEventListener("submit", async (event) => {
