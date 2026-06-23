@@ -1,3 +1,5 @@
+import { parseISO, format } from "date-fns";
+
 const weatherService = (function createWeatherService() {
   const _key = "3HGKBA5NMGXPYYKD35PX7EH34";
 
@@ -46,7 +48,25 @@ const weatherService = (function createWeatherService() {
     };
   };
 
-  return { fetchWeather, processCurrentWeather };
+  const processWeeklyForecast = (responseJSON) => {
+    let weekData = [];
+
+    for (let i = 1; i < responseJSON.days.length; ++i) {
+      const currentDayJSON = responseJSON.days[i];
+      const date = parseISO(currentDayJSON.datetime);
+      const day = format(date, "EEEE");
+      const conditions = currentDayJSON.conditions;
+      const high = currentDayJSON.tempmax;
+      const low = currentDayJSON.tempmin;
+      const precipitation = currentDayJSON.precipprob;
+
+      weekData.push({ day, conditions, high, low, precipitation });
+    }
+
+    return weekData;
+  };
+
+  return { fetchWeather, processCurrentWeather, processWeeklyForecast };
 })();
 
 export { weatherService };
