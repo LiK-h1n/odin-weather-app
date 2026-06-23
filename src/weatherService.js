@@ -21,7 +21,32 @@ const weatherService = (function createWeatherService() {
     }
   };
 
-  return { fetchWeather };
+  const processCurrentWeather = (responseJSON) => {
+    const todayJSON = responseJSON.days[0];
+    const location = responseJSON.address;
+    const temperature = todayJSON.temp;
+    const conditions = todayJSON.conditions;
+    const high = todayJSON.tempmax;
+    const low = todayJSON.tempmin;
+    const feelsLike = todayJSON.feelslike;
+    const humidity = todayJSON.humidity;
+    const precipitation = todayJSON.precipprob;
+    const wind = todayJSON.windspeed;
+
+    return {
+      location,
+      temperature,
+      conditions,
+      high,
+      low,
+      feelsLike,
+      humidity,
+      precipitation,
+      wind,
+    };
+  };
+
+  return { fetchWeather, processCurrentWeather };
 })();
 
 export { weatherService };

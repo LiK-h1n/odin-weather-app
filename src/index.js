@@ -1,4 +1,6 @@
 import { weatherService } from "./weatherService.js";
 
-const weather = await weatherService.fetchWeather("bangalore");
-console.log(weather);
+const responseJSON = await weatherService.fetchWeather("bangalore");
+const todayData = weatherService.processCurrentWeather(responseJSON);
+
+console.log(todayData);
