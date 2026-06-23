@@ -6,14 +6,13 @@ const searchForm = document.querySelector("#search-form");
 const unitToggleButton = document.querySelector("#unit-toggle");
 
 let isMetric = true;
+let lastSearchedLocation = undefined;
 
-searchForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+async function updateWeather(location) {
   displayController.clearError();
   displayController.hideDashboard();
   displayController.showSpinner();
 
-  const location = document.querySelector("#location-input").value;
   let responseJSON;
 
   if (isMetric) {
@@ -31,11 +30,29 @@ searchForm.addEventListener("submit", async (event) => {
     displayController.renderCurrent(dayData, isMetric);
     displayController.renderForecast(weekData);
     displayController.showDashboard();
+
+    lastSearchedLocation = location;
   }
 
   displayController.hideSpinner();
+}
+
+searchForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const location = document.querySelector("#location-input").value;
+
+  updateWeather(location);
 });
 
 unitToggleButton.addEventListener("click", () => {
-  isMetric = isMetric ? false : true;
+  if (lastSearchedLocation === undefined) {
+    displayController.showError(
+      "Please search for a location first to switch units."
+    );
+  } else {
+    isMetric = isMetric ? false : true;
+
+    updateWeather(lastSearchedLocation);
+  }
 });
