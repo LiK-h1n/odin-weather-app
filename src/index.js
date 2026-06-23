@@ -1,7 +1,19 @@
+import "./styles.css";
+import { displayController } from "./display-controller.js";
 import { weatherService } from "./weatherService.js";
 
-const responseJSON = await weatherService.fetchWeather("Ladakh");
-const todayData = weatherService.processCurrentWeather(responseJSON);
-const weekData = weatherService.processWeeklyForecast(responseJSON);
+const searchForm = document.querySelector("#search-form");
 
-console.log(todayData);
+searchForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  displayController.showLoading();
+
+  const location = document.querySelector("#location-input").value;
+  const responseJSON = await weatherService.fetchWeather(location);
+  const dayData = weatherService.processCurrentWeather(responseJSON);
+  const weekData = weatherService.processWeeklyForecast(responseJSON);
+
+  displayController.renderCurrent(dayData, true);
+  displayController.renderForecast(weekData);
+  displayController.hideLoading();
+});
