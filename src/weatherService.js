@@ -1,10 +1,10 @@
 const weatherService = (function createWeatherService() {
   const _key = "3HGKBA5NMGXPYYKD35PX7EH34";
 
-  const fetchWeather = async (location) => {
+  const fetchWeather = async (location, unitGroup = "metric") => {
     try {
       const response = await fetch(
-        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${_key}`
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/next7days?unitGroup=${unitGroup}&key=${_key}&contentType=json`
       );
 
       if (!response.ok) {
