@@ -1,6 +1,7 @@
 import "./styles.css";
 import { displayController } from "./display-controller.js";
 import { weatherService } from "./weatherService.js";
+import { giphyService } from "./giphyService.js";
 
 const searchForm = document.querySelector("#search-form");
 const unitToggleButton = document.querySelector("#unit-toggle");
@@ -62,3 +63,7 @@ unitToggleButton.addEventListener("click", () => {
 });
 
 init();
+
+const json = await giphyService.fetchGIF("Sunny");
+const url = giphyService.processGIF(json);
+console.log(url);
