@@ -34,6 +34,7 @@ const weatherService = (function createWeatherService() {
     const humidity = todayJSON.humidity;
     const precipitation = todayJSON.precipprob;
     const wind = todayJSON.windspeed;
+    const icon = todayJSON.icon;
 
     return {
       location,
@@ -45,6 +46,7 @@ const weatherService = (function createWeatherService() {
       humidity,
       precipitation,
       wind,
+      icon,
     };
   };
 
@@ -59,8 +61,9 @@ const weatherService = (function createWeatherService() {
       const high = currentDayJSON.tempmax;
       const low = currentDayJSON.tempmin;
       const precipitation = currentDayJSON.precipprob;
+      const icon = currentDayJSON.icon;
 
-      weekData.push({ day, conditions, high, low, precipitation });
+      weekData.push({ day, conditions, high, low, precipitation, icon });
     }
 
     return weekData;
