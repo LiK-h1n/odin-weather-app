@@ -269,3 +269,24 @@ button {
   width: 50px;
   height: 50px;
 }
+
+.error-container {
+  background-color: rgba(211, 47, 47, 0.9);
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+#error-text {
+  margin: 0;
+  font-weight: 500;
+}
